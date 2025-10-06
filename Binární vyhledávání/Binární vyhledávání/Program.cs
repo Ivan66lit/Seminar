@@ -1,4 +1,4 @@
-﻿namespace ConsoleApp1
+﻿namespace Binární_vyhledávání
 {
     internal class Program
     {
