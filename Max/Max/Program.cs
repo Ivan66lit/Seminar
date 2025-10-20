@@ -4,7 +4,7 @@
     {
         static void Main(string[] args)
         {
-            int[] pole = { 1000, -10000, 3, 4,576 };
+            int[] pole = { -1000, -10000, -3, -4 , -576 };
             Console.WriteLine("Max číslo je " + HledejMaximum(pole));
 
             foreach (int čislo in pole)
@@ -15,7 +15,7 @@
 
         static int HledejMaximum(int[] ciselnePole)
         {
-            int max = 0;
+            int max = ciselnePole[0];
             foreach (int cislo in ciselnePole)
             {
                 if (cislo > max)

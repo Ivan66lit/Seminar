@@ -48,10 +48,6 @@
                     {
                         Console.WriteLine($"{jmena[i]}({věk[i]}):{známka[i]}");
                     }
-
-                    Console.WriteLine();
-                    Console.WriteLine("Vypiš, co chceš, abych ti udělal a/b/c/d");
-                    f = Console.ReadLine();
                 }
 
                 else if (f == "b")
@@ -62,7 +58,7 @@
 
                     for (int j = 0; j < n; j++)
                     {
-                        if (známka[j] > 2)
+                        if (známka[j] < 2)
                         {
                             jmena2.Add(jmena[j]);
                             věk2.Add(věk[j]);
@@ -76,10 +72,6 @@
                     {
                         Console.WriteLine($"{jmena2[i]}({věk2[i]}):{známka2[i]}");
                     }
-
-                    Console.WriteLine();
-                    Console.WriteLine("Vypiš, co chceš, abych ti udělal a/b/c/d");
-                    f = Console.ReadLine();
                 }
 
                 else if (f == "c")
@@ -95,11 +87,11 @@
                     string h = Convert.ToString(l);
                     Console.Write("Průměrný věk je ");
                     Console.WriteLine(h);
-
-                    Console.WriteLine();
-                    Console.WriteLine("Vypiš, co chceš, abych ti udělal a/b/c/d");
-                    f = Console.ReadLine();
                 }
+
+                Console.WriteLine();
+                Console.WriteLine("Vypiš, co chceš, abych ti udělal a/b/c/d");
+                f = Console.ReadLine();
             }
         }
     }
