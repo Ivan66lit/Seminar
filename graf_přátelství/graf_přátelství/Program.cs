@@ -14,10 +14,10 @@
             string vstupniData = Console.ReadLine(); // 1-2 1-3 4-5 2-3 2-6 6-7
             string[] dvojice = vstupniData.Split(); // ["1-2", "1-3", "4-5", "2-3", "2-6", "6-7"]
 
-            for (int i = 0; i < dvojice.Length; i ++)
+            for (int i = 0; i < dvojice.Length; i++)
             {
                 string[] casti = dvojice[i].Split("-");
-                
+
                 int vrchol1 = Convert.ToInt32(casti[0]) - 1;
                 int vrchol2 = Convert.ToInt32(casti[1]) - 1;
 
@@ -33,7 +33,7 @@
             bool ExistenceCesty(int[,] graf, int start, int cil, bool[] navstiveno, List<int> cesta)
             {
                 cesta.Add(start + 1);
-                
+
                 if (graf[start, cil] == 1)
                 {
                     cesta.Add(cil + 1);
@@ -67,12 +67,49 @@
             bool vysledek = ExistenceCesty(graf, clovek1, clovek2, navstiveno, cesta);
             if (vysledek)
             {
-                Console.WriteLine(string.Join("->", cesta));
+                // Console.WriteLine(string.Join("->", cesta));
             }
             else
             {
-                Console.WriteLine("Neexistuje");
+               // Console.WriteLine("Neexistuje");
             }
+
+            void Cesta(int[,] graf, int start, int cil, bool[] nalezeno, bool[] otevreno, bool[] uzavreno)
+            {
+
+                Queue<int> frontaOtevrenychVrcholu = new Queue<int>();
+                frontaOtevrenychVrcholu.Enqueue(start);
+
+                while (frontaOtevrenychVrcholu.Count > 0)
+                {
+                    int n = graf.GetLength(0);
+
+                    otevreno[frontaOtevrenychVrcholu.Peek()] = true;
+
+                    for (int i = 0; i < n; i++)
+                    {
+                        if (graf[frontaOtevrenychVrcholu.Peek(), i] == 1)
+                        {
+                            if (!nalezeno[i])
+                            {
+                                otevreno[frontaOtevrenychVrcholu.Peek()] = true;
+
+                                frontaOtevrenychVrcholu.Enqueue(i);
+                            }
+                        }
+                    }
+
+                    uzavreno[frontaOtevrenychVrcholu.Peek()] = true;
+                    frontaOtevrenychVrcholu.Dequeue();
+                }
+
+                Console.WriteLine(frontaOtevrenychVrcholu);
+            }
+
+            bool[] nalezeno = new bool[graf.GetLength(0)];
+            bool[] otevreno = new bool[graf.GetLength(0)];
+            bool[] uzavreno = new bool[graf.GetLength(0)];
+            Cesta(graf, clovek1, clovek2, nalezeno, otevreno, uzavreno);
         }
     }
 }
