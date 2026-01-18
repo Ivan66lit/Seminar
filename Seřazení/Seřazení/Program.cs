@@ -4,10 +4,9 @@
     {
         static void Main(string[] args)
         {
-            int[] pole = { -20, 1, 0, 3465, -1, 2 };
+            int[] pole = { -20, -1, -3465, -1, -2 };
 
-            foreach (int cislo in pole)
-                Console.WriteLine(cislo);
+            Console.WriteLine(string.Join("; ", pole));
 
             SeřadPrvky(pole);
         }

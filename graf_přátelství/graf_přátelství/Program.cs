@@ -30,86 +30,37 @@
             int clovek1 = Convert.ToInt32(par[0]) - 1;
             int clovek2 = Convert.ToInt32(par[1]) - 1;
 
-            bool ExistenceCesty(int[,] graf, int start, int cil, bool[] navstiveno, List<int> cesta)
-            {
-                cesta.Add(start + 1);
-
-                if (graf[start, cil] == 1)
-                {
-                    cesta.Add(cil + 1);
-                    return true;
-                }
-
-                navstiveno[start] = true;
-
-                int n = graf.GetLength(0);
-
-                for (int i = 0; i < n; i++)
-                {
-                    if (graf[start, i] == 1)
-                    {
-                        if (!navstiveno[i])
-                        {
-                            if (ExistenceCesty(graf, i, cil, navstiveno, cesta))
-                            {
-                                return true;
-                            }
-                        }
-                    }
-                }
-
-                return false;
-            }
-
             bool[] navstiveno = new bool[graf.GetLength(0)];
             List<int> cesta = new List<int>();
 
             bool vysledek = ExistenceCesty(graf, clovek1, clovek2, navstiveno, cesta);
             if (vysledek)
-            {
-                // Console.WriteLine(string.Join("->", cesta));
-            }
+                Console.WriteLine(string.Join("->", cesta));
             else
+                Console.WriteLine("Neexistuje");
+        }
+
+        static bool ExistenceCesty(int[,] graf, int start, int cil, bool[] navstiveno, List<int> cesta)
+        {
+            cesta.Add(start + 1);
+            navstiveno[start] = true;
+
+            if (start == cil)
+                return true;
+
+            int n = graf.GetLength(0);
+
+            for (int i = 0; i < n; i++)
             {
-               // Console.WriteLine("Neexistuje");
-            }
-
-            void Cesta(int[,] graf, int start, int cil, bool[] nalezeno, bool[] otevreno, bool[] uzavreno)
-            {
-
-                Queue<int> frontaOtevrenychVrcholu = new Queue<int>();
-                frontaOtevrenychVrcholu.Enqueue(start);
-
-                while (frontaOtevrenychVrcholu.Count > 0)
+                if (graf[start, i] == 1 && !navstiveno[i])
                 {
-                    int n = graf.GetLength(0);
-
-                    otevreno[frontaOtevrenychVrcholu.Peek()] = true;
-
-                    for (int i = 0; i < n; i++)
-                    {
-                        if (graf[frontaOtevrenychVrcholu.Peek(), i] == 1)
-                        {
-                            if (!nalezeno[i])
-                            {
-                                otevreno[frontaOtevrenychVrcholu.Peek()] = true;
-
-                                frontaOtevrenychVrcholu.Enqueue(i);
-                            }
-                        }
-                    }
-
-                    uzavreno[frontaOtevrenychVrcholu.Peek()] = true;
-                    frontaOtevrenychVrcholu.Dequeue();
+                    if (ExistenceCesty(graf, i, cil, navstiveno, cesta))
+                        return true;
                 }
-
-                Console.WriteLine(frontaOtevrenychVrcholu);
             }
 
-            bool[] nalezeno = new bool[graf.GetLength(0)];
-            bool[] otevreno = new bool[graf.GetLength(0)];
-            bool[] uzavreno = new bool[graf.GetLength(0)];
-            Cesta(graf, clovek1, clovek2, nalezeno, otevreno, uzavreno);
+            cesta.RemoveAt(cesta.Count - 1);
+            return false;
         }
     }
 }
