@@ -8,9 +8,9 @@ namespace PololetniUloha
         {
             // (20b) 1. Seřaďte známky ze souboru znamky.txt od 1 do 5 algoritmem s lineární časovou složitostí vzhledem k počtu známek. 
             // Vypište je na řádek a pak vypište i četnosti jednotlivých známek.
-            using(StreamReader sr = new StreamReader(@"..\..\..\..\..\znamky.txt")) // otevření souboru pro čtení
+            using (StreamReader sr = new StreamReader(@"..\..\..\..\..\znamky.txt")) // otevření souboru pro čtení
             {
-                int[] massive = [0, 0, 0, 0, 0];
+                int[] massive = {0, 0, 0, 0, 0};
                 while (!sr.EndOfStream) // dokud jsme nedošli na konec souboru
                 {
                     int znamka = Convert.ToInt16(sr.ReadLine()); // čteme známky po řádcích a převádíme je na číslo
@@ -31,40 +31,49 @@ namespace PololetniUloha
 
                     Console.WriteLine(Convert.ToString("pocet " + massive[i - 1]));
                 }
-            // => to, co jste pravděpodobně stvořili se nazývá Counting Sort
+                // => to, co jste pravděpodobně stvořili se nazývá Counting Sort
 
 
 
-            // (40b) 2. Ze souboru znamky_prezdivky.csv vytvořte objekty typu Student se správně přiřazenou známkou a přezdívkou.
-            // Seřaďte je podle známek (stabilně = dodržte pořadí v souboru) a vypište seřazené dvojice (znamka: přezdívka) - na každý řádek jednu.
-            using(StreamReader sr = new StreamReader(@"..\..\..\..\..\znamky_prezdivky.csv"))
+                // (40b) 2. Ze souboru znamky_prezdivky.csv vytvořte objekty typu Student se správně přiřazenou známkou a přezdívkou.
+                // Seřaďte je podle známek (stabilně = dodržte pořadí v souboru) a vypište seřazené dvojice (znamka: přezdívka) - na každý řádek jednu.
+            List<Student>[] znamkyStudentu =
             {
-                
-                while (!sr.EndOfStream)
-                {
-                    string[] line = sr.ReadLine().Split(";");
-                    List<Student>[] znamkyStudentu =
-                    {
-                        new List<Student>(), new List<Student>(), new List<Student>(), new List<Student>(), new List<Student>()
-                    };
-                    
+                new List<Student>(), new List<Student>(), new List<Student>(), new List<Student>(), new List<Student>()
+            };
 
-                }                
+            using (StreamReader sr = new StreamReader(@"..\..\..\..\..\znamky_prezdivky.csv"))
+            {
+                    while (!sr.EndOfStream)
+                    {
+                        string[] line = sr.ReadLine().Split(";");
+                        string prezdivka = line[0];
+                        int znamka = int.Parse(line[1]);
+
+                        znamkyStudentu[znamka - 1].Add(new Student(prezdivka, znamka));
+                    }
+            }
+
+            Console.WriteLine("Seřazení studenti podle známek:");
+            for (int i = 0; i < 5; i++)
+            {
+                foreach (var student in znamkyStudentu[i])
+                    Console.WriteLine($"{student.Znamka}: {student.Prezdivka}");
+            }
+                // => to, co jste pravděpodobně stvořili se nazývá Bucket Sort (přihrádkové řazení)
+
+
+
+
+                // (10b) 3. Určete časovou a prostorovou složitost algoritmu z 2. úkolu
+                // casova: O(n) kazdy student je zpracovan pouze jednou
+                // prostorova: O(n) protoze potrebujeme ulozit n studentu
+
+
+
+                // (+60b) 4. BONUS: Napište kód, který bude řadit lexikograficky velká čísla v lineárním čase. Využijte dat ze souboru velka_cisla.txt
 
             }
-            // => to, co jste pravděpodobně stvořili se nazývá Bucket Sort (přihrádkové řazení)
-
-
-
-
-            // (10b) 3. Určete časovou a prostorovou složitost algoritmu z 2. úkolu
-
-
-
-
-            // (+60b) 4. BONUS: Napište kód, který bude řadit lexikograficky velká čísla v lineárním čase. Využijte dat ze souboru velka_cisla.txt
-
-        }
     }
 
     class Student
