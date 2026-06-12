@@ -21,6 +21,16 @@
         public static void MergeSort(int[] array, int left, int right)
         {
             /* TODO: Dopište tělo funkce a otestujte ji (alespoň 3 testy) */
+            if (left < right)
+            {
+                int middle = left + (right - left) / 2;
+
+                MergeSort(array, left, middle);
+
+                MergeSort(array, middle + 1, right);
+
+                Merge(array, left, middle, right);
+            }
         }
 
 
